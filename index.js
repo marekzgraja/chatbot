@@ -97,34 +97,66 @@ bot.hear(/temperature in (.*)/i, (payload, chat, data) => {
 	chat.conversation((conversation) => {
 		const city = data.match[1]; 
 
-		let result = getWeather(city);
+		const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
 
-		if(result){ 
-			conversation.say('Temperature in ' + city + ' is ' + result + ' Celsius');
-		}else{ 
-			conversation.say('I could not find information about temperature in given city.');
-		} 
+		fetch(url)
+			.then(res => res.json())
+			.then(json => {
+				console.log("OWM result: " + JSON.stringify(json));
+				if(json.cod == "404"){
+					conversation.say('I could not find information about temperature in given city.');
+				}else{ 
+					result = json.main.temp;
+					conversation.say('Temperature in ' + city + ' is ' + result + ' Celsius');
+				} 
+				conversation.end();
+		}); 
 
-		conversation.end();
+
 	});
 });
 
+bot.hear('temperature', (payload, chat) => {
+	console.log('button TEMP clicked'); 
 
-function getWeather(city){
-	const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
+	chat.conversation((conversation) => {
 
-	fetch(url)
-		.then(res => res.json())
-		.then(json => {
-			console.log("OWM result: " + JSON.stringify(json));
-			if(json.cod == "404"){
-				return false;
-			}else{ 
-				return json.main.temp;
-			} 
-	}); 
-}
+		const question = {
+			text: 'Write a city you want temperature for.',
+			quickReplies: ['Prague', 'London', 'New York'],
+			options: {typing: true}
+		}; 
 
+		conversation.ask(
+			question, 
+			(payload, conversation) => { 
+
+				let city = payload.message.text;
+				console.log('is this a city: ' + city);
+
+				let result;
+
+				const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
+
+				fetch(url)
+					.then(res => res.json())
+					.then(json => {
+						console.log("OWM result: " + JSON.stringify(json));
+						if(json.cod == "404"){
+							result = false;
+							conversation.say('I could not find information about temperature in given city.');
+						}else{ 
+							result = json.main.temp;
+							conversation.say('Temperature in ' + city + ' is ' + result + ' Celsius');
+						} 
+						conversation.end();
+				}); 
+
+			}
+		); 
+	});
+
+});
 
 
 bot.start(port);
