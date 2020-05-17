@@ -11,7 +11,7 @@ const fetch = require('node-fetch');
 var port = process.env.PORT || config.get('PORT'); 
 
 //api keys
-const OMW_KEY = "02695ee4c789e3ed332512aea62be367";
+const OWM_KEY = "02695ee4c789e3ed332512aea62be367";
 
 console.log('index.js inited');
 
