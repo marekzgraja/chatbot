@@ -3,6 +3,8 @@ const config = require('config');
 
 var port = process.env.PORT || config.get('PORT');
 
+console.log('index.js inited');
+
 const bot = new BootBot({
   accessToken: config.get('ACCESS_TOKEN'),
   verifyToken: config.get('VERIFY_TOKEN'),
