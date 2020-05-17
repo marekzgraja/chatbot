@@ -43,32 +43,37 @@ bot.hear(['hello', 'hi', 'hey'], (payload, chat) => {
 bot.on('postback:HELP_WEATHER', (payload, chat) => {
 	console.log('button weather clicked'); 
 
-	const quesiton = {
-		text: 'Write a city you want weather for.',
-		quickReplies: ['Prague', 'London', 'New York']
-	};
+	chat.conversation((conversation) => {
+		const quesiton = {
+			text: 'Write a city you want weather for.',
+			quickReplies: ['Prague', 'London', 'New York']
+		};
 
-	const answer = (payload, convo) => {
-		const city = payload.message.text; 
+		const answer = (payload, convo) => {
+			const city = payload.message.text; 
 
-		let result = getWeather(city);
+			let result = getWeather(city);
 
 
-		if(result){ 
-			chat.say('Wheather in ' + city + 'is ' + result + ' Celsius');
-		}else{ 
-			chat.say('I could not find information about weather in given city.');
-		} 
+			if(result){ 
+				conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
+			}else{ 
+				conversation.say('I could not find information about weather in given city.');
+			} 
 
-	}; 
+			conversation.end();
 
-	const callbacks = [];
+		}; 
 
-	const options = { 
-		typing: true //send a typing indicator before asking the question
-	};
+		const callbacks = [];
 
-	convo.ask(question, answer, callbacks, options); 
+		const options = { 
+			typing: true //send a typing indicator before asking the question
+		};
+
+		conversation.ask(question, answer, callbacks, options); 
+	});
+
 });
 
 bot.hear(/weather in (.*)/i, (payload, chat, data) => {
