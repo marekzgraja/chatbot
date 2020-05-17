@@ -64,7 +64,15 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 
 		}; 
 
-		const callbacks = [];
+		const callbacks = [
+			{
+				event: 'quicky_reply',
+				callback: (value) => {
+					console.log('quick reply: ' + value);
+					conversation.say(value);
+				}
+			} 
+		];
 
 		const options = { 
 			typing: true //send a typing indicator before asking the question
