@@ -42,7 +42,7 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 	getWeather(); 
 });
 
-bot.hear(/weather (.*)/i, (payload, chat, data) => {
+bot.hear(['weather'], (payload, chat, data) => {
 	console.log('someone said weather?'); 
 	getWeather(chat); 
 });
