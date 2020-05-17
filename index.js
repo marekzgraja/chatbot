@@ -44,7 +44,7 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 	console.log('button weather clicked'); 
 
 	chat.conversation((conversation) => {
-		const quesiton = {
+		const question = {
 			text: 'Write a city you want weather for.',
 			quickReplies: ['Prague', 'London', 'New York']
 		};
