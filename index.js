@@ -42,8 +42,8 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 	getWeather(); 
 });
 
-bot.on('postback:Weather', (payload, chat) => {
-	console.log('button weather clicked'); 
+bot.hear(/weather (.*)/i, (payload, chat, data) => {
+	console.log('someone said weather?'); 
 	getWeather(chat); 
 });
 
