@@ -49,8 +49,16 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 	};
 
 	const answer = (payload, convo) => {
-		const city = payload.message.text;
+		const city = payload.message.text; 
 
+		let result = getWeather(city);
+
+
+		if(result){ 
+			chat.say('Wheather in ' + city + 'is ' + result + ' Celsius');
+		}else{ 
+			chat.say('I could not find information about weather in given city.');
+		} 
 
 	};
 	
@@ -70,6 +78,8 @@ bot.hear(/weather in (.*)/i, (payload, chat, data) => {
 		}else{ 
 			conversation.say('I could not find information about weather in given city.');
 		} 
+
+		conversation.end();
 	});
 });
 
