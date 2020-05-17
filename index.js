@@ -44,7 +44,7 @@ bot.hear(['hello', 'hi', 'hey'], (payload, chat) => {
 //help
 bot.hear(['help'], (payload, chat) => {
 	console.log('help');
-	chat.say('List of all commands:\ntemperature\ntemperature in <city>\nweather\nweather in <city>\nhelp\nhello');
+	chat.say('*List of all commands:*\ntemperature\ntemperature in <city>\nweather\nweather in <city>\nhelp\nhello');
 });
 
 //weather with quick replies
