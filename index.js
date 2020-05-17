@@ -38,10 +38,13 @@ bot.hear(['hello', 'hi', 'hey'], (payload, chat) => {
 });
 
 bot.on('postback:HELP_WEATHER', (payload, chat) => {
-	console.log('button weather clicked');
-
+	console.log('button weather clicked'); 
 	getWeather(); 
+});
 
+bot.on('postback:Weather', (payload, chat) => {
+	console.log('button weather clicked'); 
+	getWeather(); 
 });
 
 
