@@ -54,10 +54,11 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 		conversation.ask(
 			question, 
 			(payload, conversation) => { 
+
 				let text = payload.message.text;
 				console.log('is this a city: ' + text);
-				let result = getWeather(text);
-				console.log('this is the click ' + result);
+
+				let result = await getWeather(text);
 
 				if(result){ 
 					conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
@@ -90,10 +91,10 @@ bot.hear(/weather in (.*)/i, (payload, chat, data) => {
 });
 
 
-function getWeather(city){
+async function getWeather(city){
 	const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
 
-	fetch(url)
+	async fetch(url)
 		.then(res => res.json())
 		.then(json => {
 			console.log("OWM result: " + JSON.stringify(json));
