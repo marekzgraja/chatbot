@@ -44,6 +44,7 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 	console.log('button weather clicked'); 
 
 	chat.conversation((conversation) => {
+
 		const question = {
 			text: 'Write a city you want weather for.',
 			quickReplies: ['Prague', 'London', 'New York']
@@ -52,7 +53,9 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 		const answer = (payload, conversation) => {
 			const city = payload.message.text; 
 
-			let result = getWeather(city);
+			console.log('ask .. ');
+
+			let result = getWeather(city); 
 
 
 			if(result){ 
@@ -67,10 +70,13 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 		const callbacks = [
 			{
 				event: 'quicky_reply',
-				callback: (value) => {
-					console.log('quick reply: ' + value);
-					conversation.say(value);
-				}
+				callback: () => {
+					console.log('quick reply');
+				},
+				pattern: ['Prague', 'London', 'New York'],
+				callback: () => { 
+					console.log('pattern'); 
+				},
 			} 
 		];
 
@@ -79,7 +85,6 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 		};
 
 		conversation.ask(question, answer, callbacks, options); 
-		conversation.end();
 	});
 
 });
