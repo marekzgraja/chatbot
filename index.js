@@ -58,7 +58,20 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 				let text = payload.message.text;
 				console.log('is this a city: ' + text);
 
-				let result = getWeather(text);
+				let result;
+
+				const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
+
+				fetch(url)
+					.then(res => res.json())
+					.then(json => {
+						console.log("OWM result: " + JSON.stringify(json));
+						if(json.cod == "404"){
+							result = false;
+						}else{ 
+							result = json.main.temp;
+						} 
+				}); 
 
 				if(result){ 
 					conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
@@ -91,10 +104,10 @@ bot.hear(/weather in (.*)/i, (payload, chat, data) => {
 });
 
 
-async function getWeather(city){
+function getWeather(city){
 	const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
 
-	async fetch(url)
+	fetch(url)
 		.then(res => res.json())
 		.then(json => {
 			console.log("OWM result: " + JSON.stringify(json));
