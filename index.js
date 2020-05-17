@@ -69,7 +69,7 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 		}; 
 
 
-		conversation.ask({
+		conversation.ask(
 			question, 
 			(payload, conversation) => { 
 				let result = getWeather(payload.message.text);
@@ -80,7 +80,7 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 					conversation.say('I could not find information about weather in given city.');
 				} 
 			}
-		}); 
+		); 
 	});
 
 });
