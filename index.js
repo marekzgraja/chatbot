@@ -49,7 +49,7 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 			quickReplies: ['Prague', 'London', 'New York']
 		};
 
-		const answer = (payload, convo) => {
+		const answer = (payload, conversation) => {
 			const city = payload.message.text; 
 
 			let result = getWeather(city);
@@ -61,7 +61,6 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 				conversation.say('I could not find information about weather in given city.');
 			} 
 
-			conversation.end();
 
 		}; 
 
@@ -72,6 +71,7 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 		};
 
 		conversation.ask(question, answer, callbacks, options); 
+		conversation.end();
 	});
 
 });
