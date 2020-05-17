@@ -13,6 +13,7 @@ var port = process.env.PORT || config.get('PORT');
 //api keys
 const OWM_KEY = "02695ee4c789e3ed332512aea62be367";
 
+
 console.log('index.js inited');
 
 const bot = new BootBot({
@@ -34,19 +35,26 @@ bot.hear(['hello', 'hi', 'hey'], (payload, chat) => {
 		chat.say({
 			text: answer,
 			buttons: [
-				{ type: 'postback', title: 'Weather', payload: 'HELP_WEATHER'}
+				{ type: 'postback', title: 'Temperature', payload: 'HELP_TEMP'}
 			]
 		});
 	});
 });
 
-bot.on('postback:HELP_WEATHER', (payload, chat) => {
-	console.log('button weather clicked'); 
+//help
+bot.hear(['help'], (payload, chat) => {
+	console.log('help');
+	chat.say('List of all commands:\ntemperature\nweather\nhelp\nhello');
+});
+
+//weather with quick replies
+bot.on('postback:HELP_TEMP', (payload, chat) => {
+	console.log('button TEMP clicked'); 
 
 	chat.conversation((conversation) => {
 
 		const question = {
-			text: 'Write a city you want weather for.',
+			text: 'Write a city you want temperature for.',
 			quickReplies: ['Prague', 'London', 'New York'],
 			options: {typing: true}
 		}; 
@@ -68,10 +76,10 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 						console.log("OWM result: " + JSON.stringify(json));
 						if(json.cod == "404"){
 							result = false;
-							conversation.say('I could not find information about weather in given city.');
+							conversation.say('I could not find information about temperature in given city.');
 						}else{ 
 							result = json.main.temp;
-							conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
+							conversation.say('Temperature in ' + city + ' is ' + result + ' Celsius');
 						} 
 						conversation.end();
 				}); 
@@ -82,8 +90,9 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 
 });
 
-bot.hear(/weather in (.*)/i, (payload, chat, data) => {
-	console.log('someone said weather?'); 
+//weaht in given city
+bot.hear(/temperature in (.*)/i, (payload, chat, data) => {
+	console.log('someone said temperature?'); 
 
 	chat.conversation((conversation) => {
 		const city = data.match[1]; 
@@ -91,9 +100,9 @@ bot.hear(/weather in (.*)/i, (payload, chat, data) => {
 		let result = getWeather(city);
 
 		if(result){ 
-			conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
+			conversation.say('Temperature in ' + city + ' is ' + result + ' Celsius');
 		}else{ 
-			conversation.say('I could not find information about weather in given city.');
+			conversation.say('I could not find information about temperature in given city.');
 		} 
 
 		conversation.end();
