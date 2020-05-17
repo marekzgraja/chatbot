@@ -56,7 +56,7 @@ function getWeather(){
 		fetch(url)
 			.then(res => res.json())
 			.then(json => {
-				console.log("OWM result: " + JSON.stringify(json);
+				console.log("OWM result: " + JSON.stringify(json));
 				if(json.Response == "False"){
 					converstaion.say('I could not find information about weather in given city.');
 					conversation.end();
