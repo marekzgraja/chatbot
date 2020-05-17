@@ -47,7 +47,8 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 
 		const question = {
 			text: 'Write a city you want weather for.',
-			quickReplies: ['Prague', 'London', 'New York']
+			quickReplies: ['Prague', 'London', 'New York'],
+			options: {typing: true}
 		};
 
 		const answer = (payload, conversation) => {
@@ -67,17 +68,19 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 
 		}; 
 
-		const callbacks = [
-		];
 
-		const options = { 
-			typing: true //send a typing indicator before asking the question
-		};
+		conversation.ask({
+			question, 
+			(payload, conversation) => { 
+				let result = getWeather(payload.message.text);
 
-		conversation.ask(question, answer, callbacks, options); 
-		conversation.hear([/(.)*/i], (payload, chat) => {
-			console.log(payload.message.text + ' this is it');
-		});
+				if(result){ 
+					conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
+				}else{ 
+					conversation.say('I could not find information about weather in given city.');
+				} 
+			}
+		}); 
 	});
 
 });
