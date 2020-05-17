@@ -100,9 +100,7 @@ function getWeather(city){
 			}else{ 
 				return json.main.temp;
 			} 
-	});
-		
-	return false;
+	}); 
 }
 
 
