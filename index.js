@@ -55,8 +55,8 @@ bot.hear(/weather in (.*)/i, (payload, chat, data) => {
 function getWeather(chat, data){
 
 	chat.conversation((conversation) => {
-		var city = data.match[1]; 
-		var url = 'api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY;
+		const city = data.match[1]; 
+		const url = 'api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY;
 		
 
 		fetch(url)
