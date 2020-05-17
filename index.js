@@ -60,13 +60,19 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 			chat.say('I could not find information about weather in given city.');
 		} 
 
+	}; 
+
+	const callbacks = [];
+
+	const options = { 
+		typing: true //send a typing indicator before asking the question
 	};
-	
+
+	convo.ask(question, answer, callbacks, options); 
 });
 
 bot.hear(/weather in (.*)/i, (payload, chat, data) => {
 	console.log('someone said weather?'); 
-	getWeather(chat, data); 
 
 	chat.conversation((conversation) => {
 		const city = data.match[1]; 
