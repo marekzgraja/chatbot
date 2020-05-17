@@ -68,16 +68,6 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 		}; 
 
 		const callbacks = [
-			{
-				event: 'quicky_reply',
-				callback: () => {
-					console.log('quick reply');
-				},
-				pattern: ['Prague', 'London', 'New York'],
-				callback: () => { 
-					console.log('pattern'); 
-				},
-			} 
 		];
 
 		const options = { 
@@ -85,6 +75,9 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 		};
 
 		conversation.ask(question, answer, callbacks, options); 
+		conversation.hear([/(.)*/i], (payload, chat) => {
+			console.log(payload.message.text + ' this is it');
+		});
 	});
 
 });
