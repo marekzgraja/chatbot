@@ -63,7 +63,7 @@ function getWeather(chat, data){
 			.then(res => res.json())
 			.then(json => {
 				console.log("OWM result: " + JSON.stringify(json));
-				if(json.Response == "False"){
+				if(json.cod == "404"){
 					converstaion.say('I could not find information about weather in given city.');
 					conversation.end();
 				}else{ 
