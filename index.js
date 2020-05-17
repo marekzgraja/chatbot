@@ -56,7 +56,7 @@ function getWeather(chat, data){
 
 	chat.conversation((conversation) => {
 		const city = data.match[1]; 
-		const url = 'api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY;
+		const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY;
 		
 
 		fetch(url)
