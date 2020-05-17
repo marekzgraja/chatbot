@@ -68,17 +68,14 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 						console.log("OWM result: " + JSON.stringify(json));
 						if(json.cod == "404"){
 							result = false;
+							conversation.say('I could not find information about weather in given city.');
 						}else{ 
 							result = json.main.temp;
+							conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
 						} 
+						conversation.end();
 				}); 
 
-				if(result){ 
-					conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
-				}else{ 
-					conversation.say('I could not find information about weather in given city.');
-				} 
-				conversation.end();
 			}
 		); 
 	});
