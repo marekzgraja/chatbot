@@ -44,12 +44,12 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 
 bot.on('postback:Weather', (payload, chat) => {
 	console.log('button weather clicked'); 
-	getWeather(); 
+	getWeather(chat); 
 });
 
 
 //functions
-function getWeather(){
+function getWeather(chat){
 
 	chat.conversation((conversation) => {
 		var city = data.match[1]; 
