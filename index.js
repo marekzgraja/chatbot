@@ -42,36 +42,55 @@ bot.hear(['hello', 'hi', 'hey'], (payload, chat) => {
 
 bot.on('postback:HELP_WEATHER', (payload, chat) => {
 	console.log('button weather clicked'); 
-	getWeather(); 
+
+	const quesiton = {
+		text: 'Write a city you want weather for.',
+		quickReplies: ['Prague', 'London', 'New York']
+	};
+
+	const answer = (payload, convo) => {
+		const city = payload.message.text;
+
+
+	};
+	
 });
 
 bot.hear(/weather in (.*)/i, (payload, chat, data) => {
 	console.log('someone said weather?'); 
 	getWeather(chat, data); 
-});
-
-
-//functions
-function getWeather(chat, data){
 
 	chat.conversation((conversation) => {
 		const city = data.match[1]; 
-		const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric';
-		
 
-		fetch(url)
-			.then(res => res.json())
-			.then(json => {
-				console.log("OWM result: " + JSON.stringify(json));
-				if(json.cod == "404"){
-					converstaion.say('I could not find information about weather in given city.');
-					conversation.end();
-				}else{ 
-					conversation.say('Wheather in ' + city + 'is ' + json.main.temp);
-				}
-		});
+		let result = getWeather(city);
+
+		if(result){ 
+			conversation.say('Wheather in ' + city + 'is ' + result + ' Celsius');
+		}else{ 
+			conversation.say('I could not find information about weather in given city.');
+		} 
 	});
+});
 
+
+function getWeather(city){
+	const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
+
+	fetch(url)
+		.then(res => res.json())
+		.then(json => {
+			console.log("OWM result: " + JSON.stringify(json));
+			if(json.cod == "404"){
+				return false;
+			}else{ 
+				return json.main.temp;
+			} 
+	});
+		
+	return false;
 }
+
+
 
 bot.start(port);
