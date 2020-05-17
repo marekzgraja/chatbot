@@ -42,14 +42,14 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 	getWeather(); 
 });
 
-bot.hear(['weather'], (payload, chat, data) => {
+bot.hear(/weather in (.*)/i, (payload, chat, data) => {
 	console.log('someone said weather?'); 
-	getWeather(chat); 
+	getWeather(chat, data); 
 });
 
 
 //functions
-function getWeather(chat){
+function getWeather(chat, data){
 
 	chat.conversation((conversation) => {
 		var city = data.match[1]; 
