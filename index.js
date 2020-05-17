@@ -55,8 +55,8 @@ bot.on('postback:HELP_WEATHER', (payload, chat) => {
 			question, 
 			(payload, conversation) => { 
 
-				let text = payload.message.text;
-				console.log('is this a city: ' + text);
+				let city = payload.message.text;
+				console.log('is this a city: ' + city);
 
 				let result;
 
