@@ -1,17 +1,17 @@
-# Vyrob si vlastního chatbota
+# Facebook chatbot - weather
 
-V posledních letech zažívají obrovský boom uživatelská rozhraní založená na přirozené konverzaci. Můžeš se svého telefonu zeptat na zítřejší počasí, rezervovat si na facebooku lístky do kina apod. Přijď si vytvořit vlastního chatbota a zjistit, jak se takováto rozhraní vyrábí.
-Úvod
 
-### Co se na tomto workshopu naučíte a co si vyzkoušíte:
+## Commands:
 
-* Zjistíte, jak fungují automatické roboty pro chat
-* Zjistíte, jak ze svého počítače udělat server pro chatbota
-* Naučíte se konfigurovat chatbota na facebooku
-* Vytvoříte si vlastního chatbota v jazyce Javascript
-* A nakonec si se svým chatbotem můžete promluvit!
+* hello - shows welcome message with users name
+* weather - in 2nd step it asks for a city, then shows current weather in the given city
+* weather in <city> - shows current weather in the given city
+* temperature - in 2nd step it asks for a city, then shows current temperature in the given city
+* temperature in <city> - shows current temperature in the given city
+* help - lists all available commands
 
-### Co k tomu budete potřebovat:
+### Tech stack
 
-* Účet na Facebooku
+* JavaScript, Node JS, Heroku, Git
+
 
