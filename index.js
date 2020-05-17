@@ -30,7 +30,7 @@ bot.on('message', (payload, chat) => {
 bot.hear(['hello', 'hi', 'hey'], (payload, chat) => {
 	console.log('The user said "hello" or "hi"!');
 	chat.getUserProfile().then((user) => {
-		var answer = `Hello ${user.first_name}, how can I help you? You do not know? Then choose one of the commands below.`;
+		var answer = `Hello ${user.first_name}, how can I help you? You do not know? Then choose the command below or type help to see all commands.`;
 		
 		chat.say({
 			text: answer,
