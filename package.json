@@ -16,10 +16,10 @@
     "config": "2.0.1",
     "ngrok": "^3.2.7",
     "nodemon": "^1.18.10",
-    "togpx": "^0.5.4",
-    "tmp": "^0.2.1" 
+    "tmp": "^0.2.1",
+    "togpx": "^0.5.4"
   },
-  "engines" : {
-	  "node": "8.x"
+  "engines": {
+    "node": "10.x"
   }
 }
