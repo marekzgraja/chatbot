@@ -44,7 +44,7 @@ bot.hear(['hello', 'hi', 'hey'], (payload, chat) => {
 //help
 bot.hear(['help'], (payload, chat) => {
 	console.log('help');
-	chat.say('List of all commands:\ntemperature\nweather\nhelp\nhello');
+	chat.say('List of all commands:\ntemperature\ntemperature in <city>\nweather\nweather in <city>\nhelp\nhello');
 });
 
 //weather with quick replies
@@ -90,7 +90,7 @@ bot.on('postback:HELP_TEMP', (payload, chat) => {
 
 });
 
-//weaht in given city
+//temperature in given city
 bot.hear(/temperature in (.*)/i, (payload, chat, data) => {
 	console.log('someone said temperature?'); 
 
@@ -156,6 +156,72 @@ bot.hear('temperature', (payload, chat) => {
 		); 
 	});
 
+});
+
+//temperature in given city
+bot.hear(/weather in (.*)/i, (payload, chat, data) => {
+	console.log('someone said weather?'); 
+
+	chat.conversation((conversation) => {
+		const city = data.match[1]; 
+
+		const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
+
+		fetch(url)
+			.then(res => res.json())
+			.then(json => {
+				console.log("OWM result: " + JSON.stringify(json));
+				if(json.cod == "404"){
+					conversation.say('I could not find information about weather in given city.');
+				}else{ 
+					result = json.weather[0].description;
+					conversation.say('Wheather in ' + city + ': ' + result);
+				} 
+				conversation.end();
+		}); 
+
+
+	});
+});
+
+bot.hear('weather', (payload, chat) => {
+	console.log('button TEMP clicked'); 
+
+	chat.conversation((conversation) => {
+
+		const question = {
+			text: 'Write a city you want weather for.',
+			quickReplies: ['Prague', 'London', 'New York'],
+			options: {typing: true}
+		}; 
+
+		conversation.ask(
+			question, 
+			(payload, conversation) => { 
+
+				let city = payload.message.text;
+				console.log('is this a city: ' + city);
+
+				let result;
+
+				const url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + OWM_KEY + '&units=metric'; 
+
+				fetch(url)
+					.then(res => res.json())
+					.then(json => {
+						console.log("OWM result: " + JSON.stringify(json));
+						if(json.cod == "404"){
+							result = false;
+							conversation.say('I could not find information about weather in given city.');
+						}else{ 
+							result = json.main.temp;
+							conversation.say('Weather in ' + city + ': ' + result + '');
+						} 
+						conversation.end();
+				}); 
+			}
+		); 
+	}); 
 });
 
 
